@@ -631,7 +631,7 @@ drop table if exists gen_table;
 create table gen_table (
                            table_id          INTEGER      not null   primary key  AUTOINCREMENT   , --  '编号',
                            table_name        varchar(200)    default ''                 , --  '表名称',
-                           table_, --      varchar(500)    default ''                 , --  '表描述',
+                           table_comment     varchar(500)    default ''                 , --  '表描述',
                            sub_table_name    varchar(64)     default null               , --  '关联子表的表名',
                            sub_table_fk_name varchar(64)     default null               , --  '子表关联的外键名',
                            class_name        varchar(100)    default ''                 , --  '实体类名称',
@@ -661,7 +661,7 @@ create table gen_table_column (
                                   column_id         INTEGER      not null   primary key  AUTOINCREMENT   , --  '编号',
                                   table_id          INTEGER                                 , --  '归属表编号',
                                   column_name       varchar(200)                               , --  '列名称',
-                                  column_, --     varchar(500)                               , --  '列描述',
+                                  column_comment   varchar(500)                               , --  '列描述',
                                   column_type       varchar(100)                               , --  '列类型',
                                   java_type         varchar(500)                               , --  'JAVA类型',
                                   java_field        varchar(200)                               , --  'JAVA字段名',
