@@ -130,7 +130,12 @@
 
 	<select id="checkMenuNameUnique" parameterType="SysMenu" resultMap="SysMenuResult">
 		<include refid="selectMenuVo"/>
-		where menu_name=#{menuName} and parent_id = #{parentId} limit 1
+		where menu_name= #{menuName} and parent_id = #{parentId} limit 1
+	</select>
+
+	<select id="selectMenusByPathOrRouteName" parameterType="SysMenu" resultMap="SysMenuResult">
+		<include refid="selectMenuVo"/>
+		where menu_type in ('M', 'C') and (path = #{path} or path = #{routeName} or route_name = #{path} or route_name = #{routeName})
 	</select>
 
 	<update id="updateMenu" parameterType="SysMenu">
@@ -152,7 +157,7 @@
 			<if test="icon !=null and icon != ''">icon = #{icon},</if>
 			<if test="remark != null and remark != ''">remark = #{remark},</if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-			update_time = CURRENT_TIMESTAMP
+			update_time = sysdate()
 		</set>
 		where menu_id = #{menuId}
 	</update>
@@ -195,7 +200,7 @@
 		<if test="icon != null and icon != ''">#{icon},</if>
 		<if test="remark != null and remark != ''">#{remark},</if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
-		CURRENT_TIMESTAMP
+		sysdate()
 		)
 	</insert>
 

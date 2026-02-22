@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
@@ -39,7 +40,7 @@ public class SysPermissionService
         // 管理员拥有所有权限
         if (user.isAdmin())
         {
-            roles.add("admin");
+            roles.add(Constants.SUPER_ADMIN);
         }
         else
         {
@@ -60,7 +61,7 @@ public class SysPermissionService
         // 管理员拥有所有权限
         if (user.isAdmin())
         {
-            perms.add("*:*:*");
+            perms.add(Constants.ALL_PERMISSION);
         }
         else
         {
@@ -70,7 +71,7 @@ public class SysPermissionService
                 // 多角色设置permissions属性，以便数据权限匹配权限
                 for (SysRole role : roles)
                 {
-                    if (StringUtils.equals(role.getStatus(), UserConstants.ROLE_NORMAL))
+                    if (StringUtils.equals(role.getStatus(), UserConstants.ROLE_NORMAL) && !role.isAdmin())
                     {
                         Set<String> rolePerms = menuService.selectMenuPermsByRoleId(role.getRoleId());
                         role.setPermissions(rolePerms);

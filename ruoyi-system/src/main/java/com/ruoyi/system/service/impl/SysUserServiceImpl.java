@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import jakarta.validation.Validator;
@@ -238,7 +239,7 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public void checkUserDataScope(Long userId)
     {
-        if (!SysUser.isAdmin(SecurityUtils.getUserId()))
+        if (!SecurityUtils.isAdmin())
         {
             SysUser user = new SysUser();
             user.setUserId(userId);
@@ -326,7 +327,7 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public int updateUserStatus(SysUser user)
     {
-        return userMapper.updateUser(user);
+        return userMapper.updateUserStatus(user.getUserId(), user.getStatus());
     }
 
     /**
@@ -344,14 +345,27 @@ public class SysUserServiceImpl implements ISysUserService
     /**
      * 修改用户头像
      * 
-     * @param userName 用户名
+     * @param userId 用户ID
      * @param avatar 头像地址
      * @return 结果
      */
     @Override
-    public boolean updateUserAvatar(String userName, String avatar)
+    public boolean updateUserAvatar(Long userId, String avatar)
     {
-        return userMapper.updateUserAvatar(userName, avatar) > 0;
+        return userMapper.updateUserAvatar(userId, avatar) > 0;
+    }
+
+    /**
+     * 更新用户登录信息（IP和登录时间）
+     *
+     * @param userId 用户ID
+     * @param loginIp 登录IP地址
+     * @param loginDate 登录时间
+     * @return 结果
+     */
+    public void updateLoginInfo(Long userId, String loginIp, Date loginDate)
+    {
+        userMapper.updateLoginInfo(userId, loginIp, loginDate);
     }
 
     /**
@@ -363,20 +377,20 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public int resetPwd(SysUser user)
     {
-        return userMapper.updateUser(user);
+        return userMapper.resetUserPwd(user.getUserId(), user.getPassword());
     }
 
     /**
      * 重置用户密码
      * 
-     * @param userName 用户名
+     * @param userId 用户ID
      * @param password 密码
      * @return 结果
      */
     @Override
-    public int resetUserPwd(String userName, String password)
+    public int resetUserPwd(Long userId, String password)
     {
-        return userMapper.resetUserPwd(userName, password);
+        return userMapper.resetUserPwd(userId, password);
     }
 
     /**
@@ -517,6 +531,7 @@ public class SysUserServiceImpl implements ISysUserService
                     checkUserDataScope(u.getUserId());
                     deptService.checkDeptDataScope(user.getDeptId());
                     user.setUserId(u.getUserId());
+                    user.setDeptId(u.getDeptId());
                     user.setUpdateBy(operName);
                     userMapper.updateUser(user);
                     successNum++;

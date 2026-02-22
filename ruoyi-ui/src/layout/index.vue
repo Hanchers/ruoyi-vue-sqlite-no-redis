@@ -4,19 +4,16 @@
     <sidebar v-if="!sidebar.hide" class="sidebar-container"/>
     <div :class="{hasTagsView:needTagsView,sidebarHide:sidebar.hide}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
-        <navbar/>
+        <navbar @setLayout="setLayout"/>
         <tags-view v-if="needTagsView"/>
       </div>
       <app-main/>
-      <right-panel>
-        <settings/>
-      </right-panel>
+      <settings ref="settingRef"/>
     </div>
   </div>
 </template>
 
 <script>
-import RightPanel from '@/components/RightPanel'
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
@@ -27,7 +24,6 @@ export default {
   components: {
     AppMain,
     Navbar,
-    RightPanel,
     Settings,
     Sidebar,
     TagsView
@@ -51,12 +47,15 @@ export default {
       }
     },
     variables() {
-      return variables;
+      return variables
     }
   },
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+    },
+    setLayout() {
+      this.$refs.settingRef.openSetting()
     }
   }
 }
@@ -76,6 +75,11 @@ export default {
       position: fixed;
       top: 0;
     }
+  }
+
+  .main-container:has(.fixed-header) {
+    height: 100vh;
+    overflow: hidden;
   }
 
   .drawer-bg {
