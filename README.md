@@ -8,7 +8,7 @@
 本项目将与若依版本保持一致。
 
 # 技术栈
-- springboot 3.3.5
+- springboot 3.5.8
 - java 17
 - sqlite 3.45.3
 - Caffeine 3.1.8
@@ -16,3 +16,10 @@
 
 # 部署
 1. 正常的打包整spring fatjar包，并部署到服务器即可
+
+# 修改记录
+1. 2026-02-21 修复v3.8.9版本[代码生成报错问题](https://gitee.com/hanchers/ruoyi-vue-sqlite-no-redis/issues/ID1KRY)
+2. 2026-02-22 同步若依v3.9.1代码
+
+# 个人博客
+[寒澈笔记](https://www.hancher.top/)

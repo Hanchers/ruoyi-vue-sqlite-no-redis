@@ -17,9 +17,11 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
+import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.common.utils.file.MimeTypeUtils;
 import com.ruoyi.framework.web.service.TokenService;
 import com.ruoyi.system.service.ISysUserService;
@@ -93,8 +95,9 @@ public class SysProfileController extends BaseController
         String oldPassword = params.get("oldPassword");
         String newPassword = params.get("newPassword");
         LoginUser loginUser = getLoginUser();
-        String userName = loginUser.getUsername();
-        String password = loginUser.getPassword();
+        Long userId = loginUser.getUserId();
+        SysUser user = userService.selectUserById(userId);
+        String password = user.getPassword();
         if (!SecurityUtils.matchesPassword(oldPassword, password))
         {
             return error("修改密码失败，旧密码错误");
@@ -104,9 +107,10 @@ public class SysProfileController extends BaseController
             return error("新密码不能与旧密码相同");
         }
         newPassword = SecurityUtils.encryptPassword(newPassword);
-        if (userService.resetUserPwd(userName, newPassword) > 0)
+        if (userService.resetUserPwd(userId, newPassword) > 0)
         {
-            // 更新缓存用户密码
+            // 更新缓存用户密码&密码最后更新时间
+            loginUser.getUser().setPwdUpdateDate(DateUtils.getNowDate());
             loginUser.getUser().setPassword(newPassword);
             tokenService.setLoginUser(loginUser);
             return success();
@@ -124,9 +128,14 @@ public class SysProfileController extends BaseController
         if (!file.isEmpty())
         {
             LoginUser loginUser = getLoginUser();
-            String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
-            if (userService.updateUserAvatar(loginUser.getUsername(), avatar))
+            String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION, true);
+            if (userService.updateUserAvatar(loginUser.getUserId(), avatar))
             {
+                String oldAvatar = loginUser.getUser().getAvatar();
+                if (StringUtils.isNotEmpty(oldAvatar))
+                {
+                    FileUtils.deleteFile(RuoYiConfig.getProfile() + FileUtils.stripPrefix(oldAvatar));
+                }
                 AjaxResult ajax = AjaxResult.success();
                 ajax.put("imgUrl", avatar);
                 // 更新缓存用户头像

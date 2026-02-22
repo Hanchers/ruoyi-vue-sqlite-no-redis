@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">{{title}}</h3>
       <el-form-item prop="username">
         <el-input v-model="registerForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
@@ -61,25 +61,28 @@
     </el-form>
     <!--  底部  -->
     <div class="el-register-footer">
-      <span>Copyright © 2018-2025 ruoyi.vip All Rights Reserved.</span>
+      <span>{{ footerContent }}</span>
     </div>
   </div>
 </template>
 
 <script>
-import { getCodeImg, register } from "@/api/login";
+import { getCodeImg, register } from "@/api/login"
+import defaultSettings from '@/settings'
 
 export default {
   name: "Register",
   data() {
     const equalToPassword = (rule, value, callback) => {
       if (this.registerForm.password !== value) {
-        callback(new Error("两次输入的密码不一致"));
+        callback(new Error("两次输入的密码不一致"))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
+      title: process.env.VUE_APP_TITLE,
+      footerContent: defaultSettings.footerContent,
       codeUrl: "",
       registerForm: {
         username: "",
@@ -106,47 +109,47 @@ export default {
       },
       loading: false,
       captchaEnabled: true
-    };
+    }
   },
   created() {
-    this.getCode();
+    this.getCode()
   },
   methods: {
     getCode() {
       getCodeImg().then(res => {
-        this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled;
+        this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled
         if (this.captchaEnabled) {
-          this.codeUrl = "data:image/gif;base64," + res.img;
-          this.registerForm.uuid = res.uuid;
+          this.codeUrl = "data:image/gif;base64," + res.img
+          this.registerForm.uuid = res.uuid
         }
-      });
+      })
     },
     handleRegister() {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
-          this.loading = true;
-          register(this.registerForm).then(res => {
-            const username = this.registerForm.username;
+          this.loading = true
+          register(this.registerForm).then(() => {
+            const username = this.registerForm.username
             this.$alert("<font color='red'>恭喜你，您的账号 " + username + " 注册成功！</font>", '系统提示', {
               dangerouslyUseHTMLString: true,
               type: 'success'
             }).then(() => {
-              this.$router.push("/login");
-            }).catch(() => {});
+              this.$router.push("/login")
+            }).catch(() => {})
           }).catch(() => {
-            this.loading = false;
+            this.loading = false
             if (this.captchaEnabled) {
-              this.getCode();
+              this.getCode()
             }
           })
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
 .register {
   display: flex;
   justify-content: center;

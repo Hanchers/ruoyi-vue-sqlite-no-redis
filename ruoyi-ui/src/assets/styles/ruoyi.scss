@@ -117,11 +117,9 @@
 
 /** 表格布局 **/
 .pagination-container {
-  position: relative;
-  height: 32px;
-  margin-bottom: 10px;
-  margin-top: 15px;
-  padding: 10px 20px !important;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 }
 
 /* tree border */
@@ -132,9 +130,14 @@
   border-radius: 4px;
 }
 
-.pagination-container .el-pagination {
-  right: 0;
-  position: absolute;
+/* horizontal el menu */
+.el-menu--horizontal .el-menu-item .svg-icon + span,
+.el-menu--horizontal .el-submenu__title .svg-icon + span {
+  margin-left: 3px;
+}
+
+.el-menu--horizontal .el-menu--popup {
+  min-width: 120px !important;
 }
 
 @media (max-width: 768px) {
@@ -201,8 +204,6 @@
 }
 
 .card-box {
-  padding-right: 15px;
-  padding-left: 15px;
   margin-bottom: 10px;
 }
 

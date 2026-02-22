@@ -44,7 +44,7 @@
           <div slot="header" class="clearfix">
             <span>基本资料</span>
           </div>
-          <el-tabs v-model="activeTab">
+          <el-tabs v-model="selectedTab">
             <el-tab-pane label="基本资料" name="userinfo">
               <userInfo :user="user" />
             </el-tab-pane>
@@ -59,10 +59,10 @@
 </template>
 
 <script>
-import userAvatar from "./userAvatar";
-import userInfo from "./userInfo";
-import resetPwd from "./resetPwd";
-import { getUserProfile } from "@/api/system/user";
+import userAvatar from "./userAvatar"
+import userInfo from "./userInfo"
+import resetPwd from "./resetPwd"
+import { getUserProfile } from "@/api/system/user"
 
 export default {
   name: "Profile",
@@ -72,20 +72,24 @@ export default {
       user: {},
       roleGroup: {},
       postGroup: {},
-      activeTab: "userinfo"
-    };
+      selectedTab: "userinfo"
+    }
   },
   created() {
-    this.getUser();
+    const activeTab = this.$route.params && this.$route.params.activeTab
+    if (activeTab) {
+      this.selectedTab = activeTab
+    }
+    this.getUser()
   },
   methods: {
     getUser() {
       getUserProfile().then(response => {
-        this.user = response.data;
-        this.roleGroup = response.roleGroup;
-        this.postGroup = response.postGroup;
-      });
+        this.user = response.data
+        this.roleGroup = response.roleGroup
+        this.postGroup = response.postGroup
+      })
     }
   }
-};
+}
 </script>

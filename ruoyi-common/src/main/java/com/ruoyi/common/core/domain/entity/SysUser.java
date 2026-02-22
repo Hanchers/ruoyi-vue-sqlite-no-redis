@@ -5,11 +5,13 @@ import java.util.List;
 import jakarta.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.annotation.Excel.Type;
 import com.ruoyi.common.annotation.Excels;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.xss.Xss;
 
 /**
@@ -55,8 +57,8 @@ public class SysUser extends BaseEntity
     /** 密码 */
     private String password;
 
-    /** 帐号状态（0正常 1停用） */
-    @Excel(name = "帐号状态", readConverterExp = "0=正常,1=停用")
+    /** 账号状态（0正常 1停用） */
+    @Excel(name = "账号状态", readConverterExp = "0=正常,1=停用")
     private String status;
 
     /** 删除标志（0代表存在 2代表删除） */
@@ -69,6 +71,9 @@ public class SysUser extends BaseEntity
     /** 最后登录时间 */
     @Excel(name = "最后登录时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date loginDate;
+
+    /** 密码最后更新时间 */
+    private Date pwdUpdateDate;
 
     /** 部门对象 */
     @Excels({
@@ -111,12 +116,7 @@ public class SysUser extends BaseEntity
 
     public boolean isAdmin()
     {
-        return isAdmin(this.userId);
-    }
-
-    public static boolean isAdmin(Long userId)
-    {
-        return userId != null && 1L == userId;
+        return SecurityUtils.isAdmin(this.userId);
     }
 
     public Long getDeptId()
@@ -197,6 +197,7 @@ public class SysUser extends BaseEntity
         this.avatar = avatar;
     }
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getPassword()
     {
         return password;
@@ -245,6 +246,16 @@ public class SysUser extends BaseEntity
     public void setLoginDate(Date loginDate)
     {
         this.loginDate = loginDate;
+    }
+
+    public Date getPwdUpdateDate()
+    {
+        return pwdUpdateDate;
+    }
+
+    public void setPwdUpdateDate(Date pwdUpdateDate)
+    {
+        this.pwdUpdateDate = pwdUpdateDate;
     }
 
     public SysDept getDept()
@@ -313,6 +324,7 @@ public class SysUser extends BaseEntity
             .append("delFlag", getDelFlag())
             .append("loginIp", getLoginIp())
             .append("loginDate", getLoginDate())
+            .append("pwdUpdateDate", getPwdUpdateDate())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())
