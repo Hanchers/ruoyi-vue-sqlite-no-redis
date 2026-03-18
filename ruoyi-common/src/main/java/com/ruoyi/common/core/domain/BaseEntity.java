@@ -1,12 +1,12 @@
 package com.ruoyi.common.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Entity基类
@@ -18,8 +18,8 @@ public class BaseEntity implements Serializable
     private static final long serialVersionUID = 1L;
 
     /** 搜索值 */
-    @JsonIgnore
-    private String searchValue;
+//    @JsonIgnore
+//    private String searchValue;
 
     /** 创建者 */
     private String createBy;
@@ -42,15 +42,15 @@ public class BaseEntity implements Serializable
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Map<String, Object> params;
 
-    public String getSearchValue()
-    {
-        return searchValue;
-    }
+//    public String getSearchValue()
+//    {
+//        return searchValue;
+//    }
 
-    public void setSearchValue(String searchValue)
-    {
-        this.searchValue = searchValue;
-    }
+//    public void setSearchValue(String searchValue)
+//    {
+//        this.searchValue = searchValue;
+//    }
 
     public String getCreateBy()
     {

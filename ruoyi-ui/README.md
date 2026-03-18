@@ -15,6 +15,8 @@ npm install --registry=https://registry.npmmirror.com
 
 # 启动服务
 npm run dev
+
+## mac电脑
 npm run linuxdev
 ```
 
