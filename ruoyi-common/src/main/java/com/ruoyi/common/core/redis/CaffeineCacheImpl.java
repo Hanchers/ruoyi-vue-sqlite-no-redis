@@ -298,9 +298,11 @@ public class CaffeineCacheImpl implements RedisCache {
     @Override
     public <T> void setCacheMapValue(String key, String hKey, T value) {
         Map<String, Object> cacheMap = getCacheMap(key);
-        if (Objects.nonNull(cacheMap)) {
-            cacheMap.put(hKey, value);
+        if (Objects.isNull(cacheMap)) {
+            cacheMap = new HashMap<>();
+            setCacheObject(key, cacheMap);
         }
+        cacheMap.put(hKey, value);
     }
 
     /**
