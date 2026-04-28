@@ -43,4 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by oper_id desc
 	</select>
 
+
+    <update id="cleanOperLog">
+        truncate table sys_oper_log
+    </update>
 </mapper>

@@ -67,6 +67,6 @@ public class SysOperLogServiceImpl extends ServiceImpl<SysOperLogMapper, SysOper
      */
     @Override
     public void cleanOperLog() {
-        getMapper().delete(SysOperLog.create());
+        getMapper().cleanOperLog();
     }
 }

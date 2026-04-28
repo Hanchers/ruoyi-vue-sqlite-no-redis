@@ -1,14 +1,16 @@
 package com.ruoyi.system.service;
 
-import java.util.List;
+import com.mybatisflex.core.service.IService;
 import com.ruoyi.system.domain.SysNotice;
+
+import java.util.List;
 
 /**
  * 公告 服务层
  * 
  * @author ruoyi
  */
-public interface ISysNoticeService
+public interface ISysNoticeService extends IService<SysNotice>
 {
     /**
      * 查询公告信息

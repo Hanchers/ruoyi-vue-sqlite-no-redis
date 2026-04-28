@@ -19,4 +19,7 @@ public interface SysOperLogMapper extends BaseMapper<SysOperLog> {
      * @return 操作日志集合
      */
     List<SysOperLog> selectOperLogList(SysOperLog operLog);
+
+
+    void cleanOperLog();
 }
