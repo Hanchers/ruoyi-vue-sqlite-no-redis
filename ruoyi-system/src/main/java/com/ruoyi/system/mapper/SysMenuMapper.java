@@ -1,15 +1,15 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 import com.ruoyi.common.core.domain.entity.SysMenu;
+import com.mybatisflex.core.BaseMapper;
 
 /**
  * 菜单表 数据层
  *
  * @author ruoyi
  */
-public interface SysMenuMapper
+public interface SysMenuMapper extends BaseMapper<SysMenu>
 {
     /**
      * 查询系统菜单列表
@@ -36,7 +36,7 @@ public interface SysMenuMapper
 
     /**
      * 根据角色ID查询权限
-     * 
+     *
      * @param roleId 角色ID
      * @return 权限列表
      */
@@ -67,12 +67,12 @@ public interface SysMenuMapper
 
     /**
      * 根据角色ID查询菜单树信息
-     * 
+     *
      * @param roleId 角色ID
      * @param menuCheckStrictly 菜单树选择项是否关联显示
      * @return 选中菜单列表
      */
-    public List<Long> selectMenuListByRoleId(@Param("roleId") Long roleId, @Param("menuCheckStrictly") boolean menuCheckStrictly);
+    public List<Long> selectMenuListByRoleId(Long roleId, boolean menuCheckStrictly);
 
     /**
      * 根据菜单ID查询信息
@@ -91,37 +91,13 @@ public interface SysMenuMapper
     public int hasChildByMenuId(Long menuId);
 
     /**
-     * 新增菜单信息
-     *
-     * @param menu 菜单信息
-     * @return 结果
-     */
-    public int insertMenu(SysMenu menu);
-
-    /**
-     * 修改菜单信息
-     *
-     * @param menu 菜单信息
-     * @return 结果
-     */
-    public int updateMenu(SysMenu menu);
-
-    /**
-     * 删除菜单管理信息
-     *
-     * @param menuId 菜单ID
-     * @return 结果
-     */
-    public int deleteMenuById(Long menuId);
-
-    /**
      * 校验菜单名称是否唯一
      *
      * @param menuName 菜单名称
      * @param parentId 父菜单ID
      * @return 结果
      */
-    public SysMenu checkMenuNameUnique(@Param("menuName") String menuName, @Param("parentId") Long parentId);
+    public SysMenu checkMenuNameUnique(String menuName, Long parentId);
 
     /**
      * 根据路由路径或名称查询菜单信息（用于唯一性校验）
@@ -130,5 +106,5 @@ public interface SysMenuMapper
      * @param routeName 路由名称
      * @return 匹配的菜单列表
      */
-    public List<SysMenu> selectMenusByPathOrRouteName(@Param("path") String path, @Param("routeName") String routeName);
+    public List<SysMenu> selectMenusByPathOrRouteName(String path, String routeName);
 }

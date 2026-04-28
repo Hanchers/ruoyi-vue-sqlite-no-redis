@@ -1,15 +1,16 @@
 package com.ruoyi.system.service;
 
-import java.util.List;
+import com.mybatisflex.core.service.IService;
 import com.ruoyi.system.domain.SysPost;
+
+import java.util.List;
 
 /**
  * 岗位信息 服务层
- * 
+ *
  * @author ruoyi
  */
-public interface ISysPostService
-{
+public interface ISysPostService extends IService<SysPost> {
     /**
      * 查询岗位信息集合
      * 
