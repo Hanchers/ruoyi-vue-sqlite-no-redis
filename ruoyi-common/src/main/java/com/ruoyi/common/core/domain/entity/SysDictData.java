@@ -1,25 +1,38 @@
 package com.ruoyi.common.core.domain.entity;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.BaseEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
+import java.io.Serial;
 
 /**
  * 字典数据表 sys_dict_data
- * 
+ *
  * @author ruoyi
  */
-public class SysDictData extends BaseEntity
-{
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+@Data(staticConstructor = "create")
+@Accessors(chain = true)
+@Table(value = "sys_dict_data")
+public class SysDictData extends BaseEntity {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /** 字典编码 */
     @Excel(name = "字典编码", cellType = ColumnType.NUMERIC)
+    @Id(keyType = KeyType.Auto)
     private Long dictCode;
 
     /** 字典排序 */
@@ -28,17 +41,24 @@ public class SysDictData extends BaseEntity
 
     /** 字典标签 */
     @Excel(name = "字典标签")
+    @NotBlank(message = "字典标签不能为空")
+    @Size(min = 0, max = 100, message = "字典标签长度不能超过100个字符")
     private String dictLabel;
 
     /** 字典键值 */
     @Excel(name = "字典键值")
+    @NotBlank(message = "字典键值不能为空")
+    @Size(min = 0, max = 100, message = "字典键值长度不能超过100个字符")
     private String dictValue;
 
     /** 字典类型 */
     @Excel(name = "字典类型")
+    @NotBlank(message = "字典类型不能为空")
+    @Size(min = 0, max = 100, message = "字典类型长度不能超过100个字符")
     private String dictType;
 
     /** 样式属性（其他样式扩展） */
+    @Size(min = 0, max = 100, message = "样式属性长度不能超过100个字符")
     private String cssClass;
 
     /** 表格字典样式 */
@@ -52,125 +72,7 @@ public class SysDictData extends BaseEntity
     @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
     private String status;
 
-    public Long getDictCode()
-    {
-        return dictCode;
-    }
-
-    public void setDictCode(Long dictCode)
-    {
-        this.dictCode = dictCode;
-    }
-
-    public Long getDictSort()
-    {
-        return dictSort;
-    }
-
-    public void setDictSort(Long dictSort)
-    {
-        this.dictSort = dictSort;
-    }
-
-    @NotBlank(message = "字典标签不能为空")
-    @Size(min = 0, max = 100, message = "字典标签长度不能超过100个字符")
-    public String getDictLabel()
-    {
-        return dictLabel;
-    }
-
-    public void setDictLabel(String dictLabel)
-    {
-        this.dictLabel = dictLabel;
-    }
-
-    @NotBlank(message = "字典键值不能为空")
-    @Size(min = 0, max = 100, message = "字典键值长度不能超过100个字符")
-    public String getDictValue()
-    {
-        return dictValue;
-    }
-
-    public void setDictValue(String dictValue)
-    {
-        this.dictValue = dictValue;
-    }
-
-    @NotBlank(message = "字典类型不能为空")
-    @Size(min = 0, max = 100, message = "字典类型长度不能超过100个字符")
-    public String getDictType()
-    {
-        return dictType;
-    }
-
-    public void setDictType(String dictType)
-    {
-        this.dictType = dictType;
-    }
-
-    @Size(min = 0, max = 100, message = "样式属性长度不能超过100个字符")
-    public String getCssClass()
-    {
-        return cssClass;
-    }
-
-    public void setCssClass(String cssClass)
-    {
-        this.cssClass = cssClass;
-    }
-
-    public String getListClass()
-    {
-        return listClass;
-    }
-
-    public void setListClass(String listClass)
-    {
-        this.listClass = listClass;
-    }
-
-    public boolean getDefault()
-    {
+    public boolean getDefault() {
         return UserConstants.YES.equals(this.isDefault);
-    }
-
-    public String getIsDefault()
-    {
-        return isDefault;
-    }
-
-    public void setIsDefault(String isDefault)
-    {
-        this.isDefault = isDefault;
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-    
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("dictCode", getDictCode())
-            .append("dictSort", getDictSort())
-            .append("dictLabel", getDictLabel())
-            .append("dictValue", getDictValue())
-            .append("dictType", getDictType())
-            .append("cssClass", getCssClass())
-            .append("listClass", getListClass())
-            .append("isDefault", getIsDefault())
-            .append("status", getStatus())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
-            .toString();
     }
 }
