@@ -1,21 +1,5 @@
 package com.ruoyi.framework.aspectj;
 
-import java.util.Collection;
-import java.util.Map;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.ArrayUtils;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.NamedThreadLocal;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson2.JSON;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.domain.entity.SysUser;
@@ -32,6 +16,23 @@ import com.ruoyi.common.utils.ip.IpUtils;
 import com.ruoyi.framework.manager.AsyncManager;
 import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.system.domain.SysOperLog;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.ArrayUtils;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.NamedThreadLocal;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * 操作日志记录处理
@@ -93,7 +94,7 @@ public class LogAspect
             LoginUser loginUser = SecurityUtils.getLoginUser();
 
             // *========数据库日志=========*//
-            SysOperLog operLog = new SysOperLog();
+            SysOperLog operLog = SysOperLog.create();
             operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
             // 请求的地址
             String ip = IpUtils.getIpAddr();
