@@ -29,3 +29,7 @@ npm run build:stage
 # 构建生产环境
 npm run build:prod
 ```
+
+
+## mybatis-flex 版本
+参考 mybatis-flex 分支
