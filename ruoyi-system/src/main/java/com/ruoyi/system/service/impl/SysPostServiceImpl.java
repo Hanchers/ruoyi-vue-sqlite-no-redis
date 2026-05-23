@@ -60,7 +60,7 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPost> impl
     @Override
     public SysPost selectPostById(Long postId)
     {
-        return super.getMapper().selectPostById(postId);
+        return super.getMapper().selectOneById(postId);
     }
 
     /**

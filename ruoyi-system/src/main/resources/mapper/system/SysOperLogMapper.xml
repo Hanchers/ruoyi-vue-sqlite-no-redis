@@ -45,6 +45,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <update id="cleanOperLog">
-        truncate table sys_oper_log
+        delete from sys_oper_log
     </update>
 </mapper>

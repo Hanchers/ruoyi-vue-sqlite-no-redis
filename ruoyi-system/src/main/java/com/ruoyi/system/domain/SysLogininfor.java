@@ -6,6 +6,7 @@ import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
+import com.ruoyi.common.core.domain.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.Date;
  */
 @Data
 @Table("sys_logininfor")
-public class SysLogininfor
+public class SysLogininfor extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 

@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
     <update id="cleanLogininfor">
-        truncate table sys_logininfor
+        delete from sys_logininfor
     </update>
 
 </mapper>

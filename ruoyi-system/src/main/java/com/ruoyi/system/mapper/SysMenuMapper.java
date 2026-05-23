@@ -1,8 +1,10 @@
 package com.ruoyi.system.mapper;
 
-import java.util.List;
-import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.mybatisflex.core.BaseMapper;
+import com.mybatisflex.core.query.QueryWrapper;
+import com.ruoyi.common.core.domain.entity.SysMenu;
+
+import java.util.List;
 
 /**
  * 菜单表 数据层
@@ -74,13 +76,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenu>
      */
     public List<Long> selectMenuListByRoleId(Long roleId, boolean menuCheckStrictly);
 
-    /**
-     * 根据菜单ID查询信息
-     *
-     * @param menuId 菜单ID
-     * @return 菜单信息
-     */
-    public SysMenu selectMenuById(Long menuId);
 
     /**
      * 是否存在菜单子节点
@@ -88,7 +83,11 @@ public interface SysMenuMapper extends BaseMapper<SysMenu>
      * @param menuId 菜单ID
      * @return 结果
      */
-    public int hasChildByMenuId(Long menuId);
+    default int hasChildByMenuId(Long menuId) {
+        SysMenu menu = new SysMenu();
+        menu.setParentId(menuId);
+        return (int)selectCountByQuery(QueryWrapper.create(menu));
+    }
 
     /**
      * 校验菜单名称是否唯一
@@ -97,7 +96,12 @@ public interface SysMenuMapper extends BaseMapper<SysMenu>
      * @param parentId 父菜单ID
      * @return 结果
      */
-    public SysMenu checkMenuNameUnique(String menuName, Long parentId);
+    default SysMenu checkMenuNameUnique(String menuName, Long parentId) {
+        SysMenu menu = new SysMenu();
+        menu.setParentId(parentId);
+        menu.setMenuName(menuName);
+        return selectOneByQuery(QueryWrapper.create(menu));
+    }
 
     /**
      * 根据路由路径或名称查询菜单信息（用于唯一性校验）

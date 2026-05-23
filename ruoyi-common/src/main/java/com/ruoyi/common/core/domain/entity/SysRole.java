@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain.entity;
 
+import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
@@ -72,6 +73,7 @@ public class SysRole extends BaseEntity
     private String delFlag;
 
     /** 用户是否存在此角色标识 */
+    @Column(ignore = true)
     private boolean flag = false;
 
     /** 菜单组 */

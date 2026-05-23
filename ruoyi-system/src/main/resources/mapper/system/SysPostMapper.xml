@@ -25,10 +25,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from sys_post
 	</select>
 
-	<select id="selectPostById" parameterType="Long" resultType="SysPost">
-		select post_id, post_code, post_name, post_sort, status, create_by, create_time, remark
-		where post_id = #{postId}
-	</select>
 
 	<select id="selectPostListByUserId" parameterType="Long" resultType="Long">
 		select p.post_id
@@ -48,11 +44,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="checkPostNameUnique" resultType="SysPost">
 		select post_id, post_code, post_name, post_sort, status, create_by, create_time, remark
+        from sys_post
 		 where post_name=#{postName} limit 1
 	</select>
 
 	<select id="checkPostCodeUnique" resultType="SysPost">
 		select post_id, post_code, post_name, post_sort, status, create_by, create_time, remark
+        from sys_post
 		 where post_code=#{postCode} limit 1
 	</select>
 

@@ -91,22 +91,11 @@
 		where m.status = '0' and rm.role_id = #{roleId}
 	</select>
 
-	<select id="selectMenuById" parameterType="Long" resultType="SysMenu">
-		select menu_id, menu_name, parent_id, order_num, path, component, `query`, route_name, is_frame, is_cache, menu_type, visible, status, ifnull(perms,'') as perms, icon, create_time
-		where menu_id = #{menuId}
-	</select>
 
-	<select id="hasChildByMenuId" resultType="Integer">
-	    select count(1) from sys_menu where parent_id = #{menuId}
-	</select>
-
-	<select id="checkMenuNameUnique" resultType="SysMenu">
-		select menu_id, menu_name, parent_id, order_num, path, component, `query`, route_name, is_frame, is_cache, menu_type, visible, status, ifnull(perms,'') as perms, icon, create_time
-		where menu_name= #{menuName} and parent_id = #{parentId} limit 1
-	</select>
 
 	<select id="selectMenusByPathOrRouteName" resultType="SysMenu">
 		select menu_id, menu_name, parent_id, order_num, path, component, `query`, route_name, is_frame, is_cache, menu_type, visible, status, ifnull(perms,'') as perms, icon, create_time
+        from sys_menu
 		where menu_type in ('M', 'C') and (path = #{path} or path = #{routeName} or route_name = #{path} or route_name = #{routeName})
 	</select>
 

@@ -271,7 +271,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public SysMenu selectMenuById(Long menuId)
     {
-        return super.getMapper().selectMenuById(menuId);
+        return super.getMapper().selectOneById(menuId);
     }
 
     /**

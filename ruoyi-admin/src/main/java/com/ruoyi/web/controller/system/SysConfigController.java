@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -89,6 +90,7 @@ public class SysConfigController extends BaseController
             return error("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
         config.setCreateBy(getUsername());
+        config.setCreateTime(new Date());
         return toAjax(configService.insertConfig(config));
     }
 
@@ -105,6 +107,7 @@ public class SysConfigController extends BaseController
             return error("修改参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
         config.setUpdateBy(getUsername());
+        config.setUpdateTime(new Date());
         return toAjax(configService.updateConfig(config));
     }
 

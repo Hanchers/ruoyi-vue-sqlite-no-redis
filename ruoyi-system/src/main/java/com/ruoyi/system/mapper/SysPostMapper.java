@@ -1,8 +1,9 @@
 package com.ruoyi.system.mapper;
 
-import java.util.List;
-import com.ruoyi.system.domain.SysPost;
 import com.mybatisflex.core.BaseMapper;
+import com.ruoyi.system.domain.SysPost;
+
+import java.util.List;
 
 /**
  * 岗位信息 数据层
@@ -26,13 +27,6 @@ public interface SysPostMapper extends BaseMapper<SysPost>
      */
     public List<SysPost> selectPostAll();
 
-    /**
-     * 通过岗位ID查询岗位信息
-     *
-     * @param postId 岗位ID
-     * @return 角色对象信息
-     */
-    public SysPost selectPostById(Long postId);
 
     /**
      * 根据用户ID获取岗位选择框列表
