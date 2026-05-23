@@ -20,6 +20,7 @@
 # 修改记录
 1. 2026-02-21 修复v3.8.9版本[代码生成报错问题](https://gitee.com/hanchers/ruoyi-vue-sqlite-no-redis/issues/ID1KRY)
 2. 2026-02-22 同步若依v3.9.1代码
+3. 2026-05-24 增加mybatis-flex 版本，参考对应分支
 
 # 个人博客
 [寒澈笔记](https://www.hancher.top/)
