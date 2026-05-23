@@ -1,11 +1,13 @@
 package com.ruoyi.system.domain;
 
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
+import com.ruoyi.common.core.domain.BaseEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import com.mybatisflex.annotation.Table;
-import com.mybatisflex.annotation.Id;
 
 /**
  * 岗位表 sys_post
@@ -14,11 +16,12 @@ import com.mybatisflex.annotation.Id;
  */
 @Data
 @Table("sys_post")
-public class SysPost extends com.ruoyi.common.core.domain.BaseEntity
+public class SysPost extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 岗位序号 */
+    @Id(keyType = KeyType.Auto)
     private Long postId;
 
     /** 岗位编码 */

@@ -7,7 +7,6 @@ import com.ruoyi.system.mapper.SysDictDataMapper;
 import com.ruoyi.system.service.ISysDictDataService;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDi
     public int insertDictData(SysDictData data) {
         data.setCreateTime(new Date());
         data.setUpdateTime(new Date());
-        int row = getMapper().insert(data);
+        int row = getMapper().insert(data,true);
         if (row > 0) {
             List<SysDictData> dictDatas = getMapper().selectDictDataByType(data.getDictType());
             DictUtils.setDictCache(data.getDictType(), dictDatas);

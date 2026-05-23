@@ -101,7 +101,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     public int insertConfig(SysConfig config) {
         config.setCreateTime(new Date());
         config.setUpdateTime(new Date());
-        int row = configMapper.insert(config);
+        int row = configMapper.insert(config,true);
         if (row > 0) {
             redisCache.setCacheObject(getCacheKey(config.getConfigKey()), config.getConfigValue());
         }

@@ -1,6 +1,7 @@
 package com.ruoyi.common.core.domain.entity;
 
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
@@ -33,7 +34,7 @@ public class SysRole extends BaseEntity
 
     /** 角色ID */
     @Excel(name = "角色序号", cellType = ColumnType.NUMERIC)
-    @Id
+    @Id(keyType = KeyType.Auto)
     private Long roleId;
 
     /** 角色名称 */

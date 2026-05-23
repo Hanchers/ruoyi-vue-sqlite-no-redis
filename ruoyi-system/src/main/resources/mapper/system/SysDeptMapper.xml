@@ -53,11 +53,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectChildrenDeptById" parameterType="Long" resultType="SysDept">
-		select * from sys_dept where find_in_set(#{deptId}, ancestors)
+		select * from sys_dept where instr(',' || ancestors || ',', ',' || #{deptId} || ',') > 0
 	</select>
 
 	<select id="selectNormalChildrenDeptById" parameterType="Long" resultType="int">
-		select count(*) from sys_dept where status = 0 and del_flag = '0' and find_in_set(#{deptId}, ancestors)
+		select count(*) from sys_dept where status = 0 and del_flag = '0' and instr(',' || ancestors || ',', ',' || #{deptId} || ',') > 0
 	</select>
 
 	<select id="checkDeptNameUnique" resultType="SysDept">

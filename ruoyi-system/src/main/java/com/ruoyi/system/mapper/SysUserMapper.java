@@ -1,9 +1,10 @@
 package com.ruoyi.system.mapper;
 
+import com.mybatisflex.core.BaseMapper;
+import com.ruoyi.common.core.domain.entity.SysUser;
+
 import java.util.Date;
 import java.util.List;
-import com.ruoyi.common.core.domain.entity.SysUser;
-import com.mybatisflex.core.BaseMapper;
 
 /**
  * 用户表 数据层
@@ -52,33 +53,7 @@ public interface SysUserMapper extends BaseMapper<SysUser>
      */
     public SysUser selectUserById(Long userId);
 
-    /**
-     * 修改用户头像
-     *
-     * @param userId 用户ID
-     * @param avatar 头像地址
-     * @return 结果
-     */
-    public int updateUserAvatar(Long userId, String avatar);
 
-    /**
-     * 修改用户状态
-     *
-     * @param userId 用户ID
-     * @param status 状态
-     * @return 结果
-     */
-    public int updateUserStatus(Long userId, String status);
-
-    /**
-     * 更新用户登录信息（IP和登录时间）
-     *
-     * @param userId 用户ID
-     * @param loginIp 登录IP地址
-     * @param loginDate 登录时间
-     * @return 结果
-     */
-    public int updateLoginInfo(Long userId, String loginIp, Date loginDate);
 
     /**
      * 重置用户密码
@@ -87,29 +62,13 @@ public interface SysUserMapper extends BaseMapper<SysUser>
      * @param password 密码
      * @return 结果
      */
-    public int resetUserPwd(Long userId, String password);
+    default int resetUserPwd(Long userId, String password) {
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(userId);
+        sysUser.setUpdateTime(new Date());
+        sysUser.setPassword(password);
+        sysUser.setPwdUpdateDate(new Date());
+        return update(sysUser);
+    }
 
-    /**
-     * 校验用户名称是否唯一
-     *
-     * @param userName 用户名称
-     * @return 结果
-     */
-    public SysUser checkUserNameUnique(String userName);
-
-    /**
-     * 校验手机号码是否唯一
-     *
-     * @param phonenumber 手机号码
-     * @return 结果
-     */
-    public SysUser checkPhoneUnique(String phonenumber);
-
-    /**
-     * 校验email是否唯一
-     *
-     * @param email 用户邮箱
-     * @return 结果
-     */
-    public SysUser checkEmailUnique(String email);
 }

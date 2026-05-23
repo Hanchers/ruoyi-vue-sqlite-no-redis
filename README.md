@@ -17,6 +17,11 @@
 
 # 部署
 1. 正常的打包整spring fatjar包，并部署到服务器即可
+2. 前端启动
+```bash
+nvm use v14.15.1
+npm run dev
+```
 
 # 修改记录
 1. 2026-02-21 修复v3.8.9版本[代码生成报错问题](https://gitee.com/hanchers/ruoyi-vue-sqlite-no-redis/issues/ID1KRY)

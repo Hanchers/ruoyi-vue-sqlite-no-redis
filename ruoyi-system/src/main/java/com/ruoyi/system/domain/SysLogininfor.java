@@ -1,12 +1,14 @@
 package com.ruoyi.system.domain;
 
-import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import lombok.Data;
-import com.mybatisflex.annotation.Table;
-import com.mybatisflex.annotation.Id;
+
+import java.util.Date;
 
 /**
  * 系统访问记录表 sys_logininfor
@@ -21,7 +23,7 @@ public class SysLogininfor
 
     /** ID */
     @Excel(name = "序号", cellType = ColumnType.NUMERIC)
-    @Id
+    @Id(keyType = KeyType.Auto)
     private Long infoId;
 
     /** 用户账号 */

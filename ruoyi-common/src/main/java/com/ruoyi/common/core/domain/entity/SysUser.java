@@ -1,6 +1,8 @@
 package com.ruoyi.common.core.domain.entity;
 
+import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
@@ -38,7 +40,7 @@ public class SysUser extends BaseEntity
 
     /** 用户ID */
     @Excel(name = "用户序号", type = Type.EXPORT, cellType = ColumnType.NUMERIC, prompt = "用户编号")
-    @Id
+    @Id(keyType = KeyType.Auto)
     private Long userId;
 
     /** 部门ID */
@@ -102,18 +104,23 @@ public class SysUser extends BaseEntity
         @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
         @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
     })
+    @Column(ignore = true)
     private SysDept dept;
 
     /** 角色对象 */
+    @Column(ignore = true)
     private List<SysRole> roles;
 
     /** 角色组 */
+    @Column(ignore = true)
     private Long[] roleIds;
 
     /** 岗位组 */
+    @Column(ignore = true)
     private Long[] postIds;
 
     /** 角色ID */
+    @Column(ignore = true)
     private Long roleId;
 
     public SysUser()

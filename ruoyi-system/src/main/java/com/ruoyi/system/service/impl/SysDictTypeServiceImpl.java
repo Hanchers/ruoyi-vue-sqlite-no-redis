@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -161,7 +160,7 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
     public int insertDictType(SysDictType dict) {
         dict.setCreateTime(new Date());
         dict.setUpdateTime(new Date());
-        int row = getMapper().insert(dict);
+        int row = getMapper().insert(dict,true);
         if (row > 0) {
             DictUtils.setDictCache(dict.getDictType(), null);
         }

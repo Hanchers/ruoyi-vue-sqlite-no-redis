@@ -50,7 +50,7 @@ public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice
     public int insertNotice(SysNotice notice) {
         notice.setCreateTime(new Date());
         notice.setUpdateTime(new Date());
-        return getMapper().insert(notice);
+        return getMapper().insert(notice,true);
     }
 
     /**

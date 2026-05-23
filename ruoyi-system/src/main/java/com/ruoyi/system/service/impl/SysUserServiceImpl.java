@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.constant.UserConstants;
@@ -176,7 +177,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public boolean checkUserNameUnique(SysUser user)
     {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        SysUser info = super.getMapper().checkUserNameUnique(user.getUserName());
+
+        SysUser info = super.getMapper()
+                .selectOneByQuery(QueryWrapper.create(SysUser.create().setUserName(user.getUserName()).setDelFlag("0")));
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
         {
             return UserConstants.NOT_UNIQUE;
@@ -194,7 +197,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public boolean checkPhoneUnique(SysUser user)
     {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        SysUser info = super.getMapper().checkPhoneUnique(user.getPhonenumber());
+        SysUser info = super.getMapper()
+                .selectOneByQuery(QueryWrapper.create(SysUser.create().setPhonenumber(user.getPhonenumber()).setDelFlag("0")));
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
         {
             return UserConstants.NOT_UNIQUE;
@@ -212,7 +216,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public boolean checkEmailUnique(SysUser user)
     {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        SysUser info = super.getMapper().checkEmailUnique(user.getEmail());
+        SysUser info = super.getMapper()
+                .selectOneByQuery(QueryWrapper.create(SysUser.create().setEmail(user.getEmail()).setDelFlag("0")));
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
         {
             return UserConstants.NOT_UNIQUE;
@@ -265,6 +270,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public int insertUser(SysUser user)
     {
         // 新增用户信息
+        user.setCreateTime(new Date());
         int rows = save(user) ? 1 : 0;
         // 新增用户岗位关联
         insertUserPost(user);
@@ -304,6 +310,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         userPostMapper.deleteUserPostByUserId(userId);
         // 新增用户与岗位管理
         insertUserPost(user);
+        user.setUpdateTime(new Date());
         return getMapper().update(user);
     }
 
@@ -330,7 +337,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public int updateUserStatus(SysUser user)
     {
-        return super.getMapper().updateUserStatus(user.getUserId(), user.getStatus());
+        SysUser u = new SysUser();
+        u.setUserId(user.getUserId());
+        u.setStatus(user.getStatus());
+        u.setUpdateTime(new Date());
+
+        return super.getMapper().update(u);
     }
 
     /**
@@ -355,7 +367,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public boolean updateUserAvatar(Long userId, String avatar)
     {
-        return super.getMapper().updateUserAvatar(userId, avatar) > 0;
+        SysUser u = new SysUser();
+        u.setUserId(userId);
+        u.setAvatar(avatar);
+        u.setUpdateTime(new Date());
+        getMapper().update(u);
+        return true;
     }
 
     /**
@@ -368,7 +385,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     public void updateLoginInfo(Long userId, String loginIp, Date loginDate)
     {
-        super.getMapper().updateLoginInfo(userId, loginIp, loginDate);
+        SysUser u = new SysUser();
+        u.setUserId(userId);
+        u.setLoginIp(loginIp);
+        u.setLoginDate(loginDate);
+
+        super.getMapper().update(u);
     }
 
     /**
@@ -526,6 +548,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                     String password = configService.selectConfigByKey("sys.user.initPassword");
                     user.setPassword(SecurityUtils.encryptPassword(password));
                     user.setCreateBy(operName);
+                    user.setCreateTime(new Date());
                     save(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 导入成功");

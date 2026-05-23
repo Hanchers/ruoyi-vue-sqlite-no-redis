@@ -22,10 +22,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND dict_type like concat('%', #{dictType}, '%')
 			</if>
 			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-				and date_format(create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+				and strftime('%Y%m%d', create_time) &gt;= strftime('%Y%m%d', #{params.beginTime})
 			</if>
 			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-				and date_format(create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+				and strftime('%Y%m%d', create_time) &lt;= strftime('%Y%m%d', #{params.endTime})
 			</if>
 	    </where>
 	</select>

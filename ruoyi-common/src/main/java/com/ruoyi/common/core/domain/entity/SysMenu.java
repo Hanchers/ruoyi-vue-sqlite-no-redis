@@ -1,6 +1,7 @@
 package com.ruoyi.common.core.domain.entity;
 
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.ruoyi.common.core.domain.BaseEntity;
 import jakarta.validation.constraints.NotBlank;
@@ -33,7 +34,7 @@ public class SysMenu extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 菜单ID */
-    @Id
+    @Id(keyType = KeyType.Auto)
     private Long menuId;
 
     /** 菜单名称 */

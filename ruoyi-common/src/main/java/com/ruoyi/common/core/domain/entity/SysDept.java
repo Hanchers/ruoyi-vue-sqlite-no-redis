@@ -1,6 +1,7 @@
 package com.ruoyi.common.core.domain.entity;
 
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.ruoyi.common.core.domain.BaseEntity;
 import jakarta.validation.constraints.Email;
@@ -34,7 +35,7 @@ public class SysDept extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 部门ID */
-    @Id
+    @Id(keyType = KeyType.Auto)
     private Long deptId;
 
     /** 父部门ID */
