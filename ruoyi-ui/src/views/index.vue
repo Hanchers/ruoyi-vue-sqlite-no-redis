@@ -1083,6 +1083,15 @@
             <span style="display: inline-block; height: 30px; line-height: 30px"
               >你可以请作者喝杯咖啡表示鼓励</span
             >
+
+            <img
+              src="@/assets/images/hancher_pay.png"
+              alt="donate"
+              width="100%"
+            />
+            <span style="display: inline-block; height: 30px; line-height: 30px"
+              >也可以请寒澈喝杯咖啡表示鼓励</span
+            >
           </div>
         </el-card>
       </el-col>
